@@ -27,7 +27,7 @@ public:
 		this->reset();
 	}
 
-	void set_player(); //za postavljanje drugog igraca!
+	void set_player();
 	void reset();
 	void play();
 	const bool gameover();
@@ -38,7 +38,3 @@ public:
 };
 
 #endif
-
-/*
-Drugi igrac izbor
-*/

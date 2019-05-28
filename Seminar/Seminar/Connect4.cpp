@@ -83,7 +83,7 @@ void Connect4::set(int lokacija) { //gdje ce biti - lokacija izmedu 0 i 6
 	zadnji_stupac = lokacija;
 }
 
-void Connect4::set(int lokacija, int igrac) { //gdje ce biti - lokacija izmedu 0 i 6
+void Connect4::set(int lokacija, int igrac) { //za igrac vs igrac
 	ploca.red[ploca.popunjenost[lokacija]].stupac[lokacija] = igrac;
 	ploca.popunjenost[lokacija] += 1;
 	zadnji_stupac = lokacija;
@@ -137,7 +137,7 @@ int Connect4::min(int dubina) {
 	return value;
 }
 
-int Connect4::max(int dubina, bool top) { //"Vjv neradi" - Neradi.
+int Connect4::max(int dubina, bool top) {
 	int value, rez, prethodno, najbolje;
 
 	if (this->check() != 0) {
@@ -231,7 +231,7 @@ void Connect4::reset() {
 	zadnji_stupac = -1;
 }
 
-void Connect4::play() { //ZA IGRACA RADI
+void Connect4::play() {
 	char lokacija;
 	bool unos_ok = false;
 	int lok;
@@ -254,7 +254,7 @@ void Connect4::play() { //ZA IGRACA RADI
 
 				if (lok >= 1 && lok <= 7) {
 
-					if (ploca.popunjenost[lok - 1] < 6) { //set funkcija? Pukne za prvi put igrat
+					if (ploca.popunjenost[lok - 1] < 6) {
 						this->set(lok - 1, igrac);
 						unos_ok = true;
 
