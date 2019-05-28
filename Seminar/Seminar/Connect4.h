@@ -18,7 +18,7 @@ private:
 	void set(int);
 	void set(int, int);
 	void remove(int);
-	int min_max(int, int = -1, bool = true, bool = true); //-1 samo da ima nesto
+	int min_max(int, bool, bool);
 public:
 	Connect4() { 
 		rezultati[0] = 0;

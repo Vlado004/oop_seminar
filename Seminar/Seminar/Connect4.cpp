@@ -71,7 +71,7 @@ void Connect4::finish(bool pobijeda) {
 		rezultati[2] += 1;
 	}
 }
-int Connect4::counter = 0; //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
 void Connect4::set(int lokacija) { //gdje ce biti - lokacija izmedu 0 i 6
 	int igrac = ploca.red[ploca.popunjenost[zadnji_stupac] - 1].stupac[zadnji_stupac] ^ 1;
 	ploca.red[ploca.popunjenost[lokacija]].stupac[lokacija] = igrac;
@@ -91,8 +91,67 @@ void Connect4::remove(int lokacija) { //gdje je prije bilo - lokacija izmedu 0 i
 	zadnji_stupac = lokacija;
 }
 
-int Connect4::min_max(int dubina, int lokacija, bool max, bool top) { //"Vjv neradi" - Neradi.
-	int value = 0, temp_value, najbolje_mjesto;
+int Connect4::min_max(int dubina, bool max, bool top) { //"Vjv neradi" - Neradi.
+	int value, rez, prethodno, najbolje;
+
+	if (this->check() == 1) {
+		std::cout << "uslo -> " << ((max) ? 50 : -1000) << " " << std::endl;
+		return (max) ? 50 : -1000;
+	}
+
+	if (dubina == 0) {
+		value = 0;
+		for (int i = 0; i < 7; i++) {
+			if (ploca.popunjenost[i] < 6) {
+
+				prethodno = zadnji_stupac;
+				this->set(i);
+
+				if (this->check() == 1) {
+					value = (max) ? value + 50 : value - 1000;
+					std::cout << "uslo -> " << value << " " << i << std::endl;
+				}
+
+
+				this->remove(prethodno);
+			}
+			//if(i == 6)
+				//std::cout << std::endl;
+		}
+
+		return value;
+	}
+
+	value = (max) ? INT_MIN : INT_MAX;
+
+	for (int i = 0; i < 7; i++) {
+		if (ploca.popunjenost[i] < 6) {
+
+			prethodno = zadnji_stupac;
+			this->set(i);
+			rez = this->min_max(dubina - 1, !max, false);
+			if (max) {
+				if (rez > value) {
+					value = rez;
+					najbolje = i;
+				}
+			} else {
+				if (rez < value) {
+					value = rez;
+					najbolje = i;
+				}
+			}
+
+			this->remove(prethodno);
+		}
+	}
+
+	if (top)
+		this->set(najbolje);
+
+	return value;
+
+/*	int value = 0, temp_value, najbolje_mjesto;
 
 	if (dubina == 0) {
 		int zadnja_lok = zadnji_stupac;
@@ -134,8 +193,8 @@ int Connect4::min_max(int dubina, int lokacija, bool max, bool top) { //"Vjv ner
 	if (top) {
 		this->set(najbolje_mjesto);
 	}
-
-	return value;
+	
+	return value;*/
 }
 
 /***PUBLIC METODE***/
@@ -202,9 +261,9 @@ void Connect4::play() { //ZA IGRACA RADI
 	}
 	else {
 		if (igraci[igrac].hard)
-			this->min_max(4);
+			this->min_max(4, true, true);
 		else
-			this->min_max(2);
+			this->min_max(2, true, true);
 
 	}
 
