@@ -5,7 +5,7 @@ class Player {
 public:
 	char znak;
 	bool ai;
-	bool hard;
+	int tezina;
 };
 
 #endif

@@ -12,13 +12,13 @@ private:
 	int rezultati[3];
 	static int counter;
 
-	//void set_player(); //za postavljanje drugog igraca!
 	int check();
 	void finish(bool);
 	void set(int);
 	void set(int, int);
 	void remove(int);
-	int min_max(int, bool, bool);
+	int min(int);
+	int max(int, bool);
 public:
 	Connect4() { 
 		rezultati[0] = 0;
@@ -27,6 +27,7 @@ public:
 		this->reset();
 	}
 
+	void set_player(); //za postavljanje drugog igraca!
 	void reset();
 	void play();
 	const bool gameover();
